@@ -1,28 +1,25 @@
-# run_etl.py
+# In run_etl.py
 
 import pandas as pd
 import os
 
 def run_pipeline():
     # --- 1. EXTRACT ---
-    # The script will run from the root, so the path is relative
     input_path = 'data/Orders.csv'
     print(f"\n1. Extracting data from {input_path}...")
     df = pd.read_csv(input_path, encoding='utf-8')
-    print("Found the following columns:", df.columns)
     print(f"   Extracted {len(df)} rows.")
-
 
     # --- 2. TRANSFORM ---
     print("\n2. Transforming data...")
     df['Order Date'] = pd.to_datetime(df['Order Date'], dayfirst=True)
     df['Ship Date'] = pd.to_datetime(df['Ship Date'], dayfirst=True)
-    df['Profit Margin'] = (df['Profit'] / df['Sales']) * 100
-    transformed_df = df[['Order ID', 'Order Date', 'Category', 'Sales', 'Profit', 'Profit Margin']]
+
+    # Since we don't have a 'Profit' column, we will select the columns we do have.
+    transformed_df = df[['Order ID', 'Order Date', 'Category', 'Sub-Category', 'Sales']]
     print("   Transformation complete.")
 
     # --- 3. LOAD ---
-    # Ensure the output directory exists
     os.makedirs('output', exist_ok=True)
     output_path = 'output/sales_report.parquet'
     print(f"\n3. Loading transformed data to {output_path}...")
