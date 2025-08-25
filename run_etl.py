@@ -9,7 +9,9 @@ def run_pipeline():
     input_path = 'data/Orders.csv'
     print(f"\n1. Extracting data from {input_path}...")
     df = pd.read_csv(input_path, encoding='utf-8')
+    print("Found the following columns:", df.columns)
     print(f"   Extracted {len(df)} rows.")
+
 
     # --- 2. TRANSFORM ---
     print("\n2. Transforming data...")
