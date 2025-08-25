@@ -13,8 +13,8 @@ def run_pipeline():
 
     # --- 2. TRANSFORM ---
     print("\n2. Transforming data...")
-    df['Order Date'] = pd.to_datetime(df['Order Date'])
-    df['Ship Date'] = pd.to_datetime(df['Ship Date'])
+    df['Order Date'] = pd.to_datetime(df['Order Date'], dayfirst=True)
+    df['Ship Date'] = pd.to_datetime(df['Ship Date'], dayfirst=True)
     df['Profit Margin'] = (df['Profit'] / df['Sales']) * 100
     transformed_df = df[['Order ID', 'Order Date', 'Category', 'Sales', 'Profit', 'Profit Margin']]
     print("   Transformation complete.")
